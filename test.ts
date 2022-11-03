@@ -24,6 +24,7 @@ assert(await work.chapters[0].workID == "37522864");
 assert(await work.chapters[0].name == "Part I");
 assert((await work.chapters[0].text).length > 0);
 
+/*
 work = await ao3.getWork("39612636");
 
 await work.init();
@@ -40,4 +41,4 @@ assert(
 assert(
   (await work.chapters[22].summary) ===
     "Fizz tries to make the best out of his comeback",
-);
+);.*/
