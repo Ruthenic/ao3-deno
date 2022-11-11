@@ -42,7 +42,7 @@ export interface SearchParameters {
 }
 
 export default class Search {
-    #baseApiURL = "/works/search?commit=Search"
+    #baseApiURL = "/works/search?commit=Search";
     #opts: SearchParameters;
     #session: {
         get: (path: string) => Promise<Response>;
@@ -52,14 +52,14 @@ export default class Search {
     results: Work[] = [];
 
     #urlConstructor(pageNum = 1) {
-        let url = this.#baseApiURL
+        let url = this.#baseApiURL;
 
         url += `&page=${pageNum}
             &work_search[query]=${this.#opts.any ?? ""}
             &work_search[title]=${this.#opts.title ?? ""}
-            &work_search[creators]=${this.#opts.author ?? ""}`
+            &work_search[creators]=${this.#opts.author ?? ""}`;
 
-        return url
+        return url;
     }
 
     constructor(opts: SearchParameters, session: {
@@ -67,30 +67,36 @@ export default class Search {
     }, DOMParser: DOMParser) {
         this.#session = session;
         this.#opts = opts;
-        this.#DOMParser = DOMParser
+        this.#DOMParser = DOMParser;
     }
 
     async update(pageNum: number) {
-        this.results = []
-        const url = this.#urlConstructor(pageNum)
-        
+        this.results = [];
+        const url = this.#urlConstructor(pageNum);
+
         const res = await this.#session.get(url);
         this.#document = this.#DOMParser.parseFromString(
             await res.text(),
             "text/html",
         ) as HTMLDocument;
 
-        await asyncForEach(Array.from(this.#document.querySelectorAll("[role='article']")),
+        await asyncForEach(
+            Array.from(this.#document.querySelectorAll("[role='article']")),
             async (e: Element) => {
-                const workId = e.id.replace("work_", "")
-                console.log(workId)
+                const workId = e.id.replace("work_", "");
+                console.log(workId);
                 const res = await this.#session.get(
                     `/works/${workId}?view_adult=true&view_full_work=true`,
                 );
-                const work = new Work(workId, await res.text(), this.#session, this.#DOMParser)
-                await work.init()
-                this.results.push(work)
-            }
-        )
+                const work = new Work(
+                    workId,
+                    await res.text(),
+                    this.#session,
+                    this.#DOMParser,
+                );
+                await work.init();
+                this.results.push(work);
+            },
+        );
     }
 }

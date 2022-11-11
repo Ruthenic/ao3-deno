@@ -4,12 +4,12 @@ import { assert } from "https://deno.land/std@0.161.0/testing/asserts.ts";
 const ao3 = new AO3();
 
 const res = await ao3.search({
-  any: "hazbin hotel"
-})
+    any: "hazbin hotel",
+});
 
-await res.update(1)
+await res.update(1);
 
-console.log(res.results[0])
+console.log(res.results[0]);
 
 /*
 let work = await ao3.getWork("37522864");

@@ -70,7 +70,7 @@ export default class Work {
     populateTags() {
         Array.from(
             (this.#document.querySelector("dd.fandom > ul.commas") as Element)
-                .children,
+                ?.children ?? [],
         ).map(
             (t) => this.tags.push(t.children[0].innerText),
         );
@@ -78,7 +78,7 @@ export default class Work {
             (this.#document.querySelector(
                 "dd.relationship > ul.commas",
             ) as Element)
-                .children,
+                ?.children ?? [],
         ).map(
             (t) => this.tags.push(t.children[0].innerText),
         );
@@ -86,13 +86,13 @@ export default class Work {
             (this.#document.querySelector(
                 "dd.character > ul.commas",
             ) as Element)
-                .children,
+                ?.children ?? [],
         ).map(
             (t) => this.tags.push(t.children[0].innerText),
         );
         Array.from(
             (this.#document.querySelector("dd.freeform > ul.commas") as Element)
-                .children,
+                ?.children ?? [], //does that make me insane
         ).map(
             (t) => this.tags.push(t.children[0].innerText),
         );
@@ -109,7 +109,7 @@ export default class Work {
 
     //CW: horrifying jank
     async populateChapters() {
-        let firstChapterUrl = "" //satisfy the typescript gods
+        let firstChapterUrl = ""; //satisfy the typescript gods
         try {
             firstChapterUrl =
                 (this.#document.querySelector("li.chapter > a") as Element)
@@ -127,7 +127,7 @@ export default class Work {
             this.chapters.push(
                 newChapter,
             );
-            return
+            return;
         }
         const res = await this.#session.get(firstChapterUrl);
         const document = this.#DOMParser.parseFromString(

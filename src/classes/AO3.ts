@@ -46,6 +46,6 @@ export default class AO3 {
     }
 
     async search(opts: SearchParameters) {
-        return new Search(opts, this.session, new DOMParser())
+        return new Search(opts, this.session, new DOMParser());
     }
 }
