@@ -5,11 +5,12 @@ const ao3 = new AO3();
 
 const res = await ao3.search({
     any: "hazbin hotel",
+    limit: 1,
 });
 
 await res.update(1);
 
-console.log(res.results[0]);
+console.log(await res.results[0].chapters[0].text);
 
 /*
 let work = await ao3.getWork("37522864");

@@ -24,6 +24,12 @@ export default class AO3 {
             get: async (path: string) => {
                 const res = await fetch(
                     opts?.url ?? "https://archiveofourown.org/" + path,
+                    {
+                        headers: {
+                            "User-Agent":
+                                "Mozilla/5.0 (Windows NT 10.0; rv:106.0) Gecko/20100101 Firefox/106.0",
+                        },
+                    },
                 );
                 if (res.status > 300) {
                     console.log(res);

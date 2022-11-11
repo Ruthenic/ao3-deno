@@ -30,6 +30,7 @@ export const Warnings = {
 };
 
 export interface SearchParameters {
+    limit?: number;
     any?: string;
     title?: string;
     author?: string;
@@ -80,9 +81,14 @@ export default class Search {
             "text/html",
         ) as HTMLDocument;
 
+        let i = 0;
+        const limit = this.#opts.limit ?? 20;
         await asyncForEach(
             Array.from(this.#document.querySelectorAll("[role='article']")),
             async (e: Element) => {
+                if (i >= limit) {
+                    return;
+                }
                 const workId = e.id.replace("work_", "");
                 console.log(workId);
                 const res = await this.#session.get(
@@ -96,6 +102,7 @@ export default class Search {
                 );
                 await work.init();
                 this.results.push(work);
+                i++;
             },
         );
     }

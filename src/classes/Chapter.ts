@@ -78,7 +78,7 @@ export default class Chapter {
         this.populateMetadata();
         this.populateSummary();
         this.populateNotes();
-        this.populateText();
+        await this.populateText();
     }
 
     populateMetadata() {
@@ -104,7 +104,7 @@ export default class Chapter {
             ?.trim();
     }
 
-    populateText() {
+    async populateText() {
         /*this.text = this.#document.querySelector("div.userstuff[role='article']")?.innerText.trim().replace(/Chapter Text\s+/, "") as string*/
         //"div.userstuff[role='article'] > p"
         Array.from(
@@ -113,7 +113,27 @@ export default class Chapter {
             ),
         ).forEach(
             (t) => this.#text += (t as Element).innerText + "\n",
+            console.log(this.#text),
         );
-        this.#text = this.#text.trim();
+        try {
+            this.#text = this.#text.trim();
+        } catch {
+            //assume single chapter work
+            const res = await this.#session.get(
+                `/works/${this.#workID}?view_adult=true`,
+            );
+            this.#document = this.#DOMParser.parseFromString(
+                await res.text(),
+                "text/html",
+            ) as HTMLDocument;
+            Array.from(
+                this.#document.querySelectorAll(
+                    "[role='article'] > div.userstuff > p",
+                ),
+            ).forEach(
+                (t) => this.#text += (t as Element).innerText + "\n",
+                console.log(this.#text),
+            );
+        }
     }
 }
