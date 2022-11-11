@@ -3,6 +3,7 @@ import { ID } from "../types.d.ts";
 import {
     DOMParser,
 } from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/deno-dom-native.ts";
+import Search, { SearchParameters } from "./Search.ts";
 
 export default class AO3 {
     session: {
@@ -42,5 +43,9 @@ export default class AO3 {
             `/works/${id}?view_adult=true&view_full_work=true`,
         );
         return new Work(id, await res.text(), this.session, new DOMParser());
+    }
+
+    async search(opts: SearchParameters) {
+        return new Search(opts, this.session, new DOMParser())
     }
 }

@@ -109,11 +109,26 @@ export default class Work {
 
     //CW: horrifying jank
     async populateChapters() {
-        const firstChapterUrl =
-            (this.#document.querySelector("li.chapter > a") as Element)
-                .getAttribute(
-                    "href",
-                ) as string + "?view_adult=true";
+        let firstChapterUrl = "" //satisfy the typescript gods
+        try {
+            firstChapterUrl =
+                (this.#document.querySelector("li.chapter > a") as Element)
+                    .getAttribute(
+                        "href",
+                    ) as string + "?view_adult=true";
+        } catch {
+            //assume single chapter work
+            const newChapter = new Chapter(
+                this.id,
+                this.id,
+                this.#session,
+                this.#DOMParser,
+            );
+            this.chapters.push(
+                newChapter,
+            );
+            return
+        }
         const res = await this.#session.get(firstChapterUrl);
         const document = this.#DOMParser.parseFromString(
             await res.text(),

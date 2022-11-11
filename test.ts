@@ -3,6 +3,15 @@ import { assert } from "https://deno.land/std@0.161.0/testing/asserts.ts";
 
 const ao3 = new AO3();
 
+const res = await ao3.search({
+  any: "hazbin hotel"
+})
+
+await res.update(1)
+
+console.log(res.results[0])
+
+/*
 let work = await ao3.getWork("37522864");
 
 await work.init();
@@ -24,7 +33,6 @@ assert(await work.chapters[0].workID == "37522864");
 assert(await work.chapters[0].name == "Part I");
 assert((await work.chapters[0].text).length > 0);
 
-/*
 work = await ao3.getWork("39612636");
 
 await work.init();
@@ -41,4 +49,4 @@ assert(
 assert(
   (await work.chapters[22].summary) ===
     "Fizz tries to make the best out of his comeback",
-);.*/
+);*/
