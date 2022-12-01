@@ -69,8 +69,6 @@ export default class Search {
                 .join("&")
         }`;
 
-        console.log(url);
-
         return url;
     }
 
