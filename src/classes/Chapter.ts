@@ -105,8 +105,7 @@ export default class Chapter {
     }
 
     async populateText() {
-        /*this.text = this.#document.querySelector("div.userstuff[role='article']")?.innerText.trim().replace(/Chapter Text\s+/, "") as string*/
-        //"div.userstuff[role='article'] > p"
+        this.#text = "";
         Array.from(
             this.#document.querySelectorAll(
                 "div.userstuff[role='article'] > p",
