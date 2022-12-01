@@ -1,14 +1,5 @@
 import Chapter from "./Chapter.ts";
-import type {
-    DOMParser,
-} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/dom/dom-parser.ts";
-import type {
-    Element,
-} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/dom/element.ts";
-import type {
-    HTMLDocument,
-} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/dom/document.ts";
-import { ID } from "../types.d.ts";
+import { DOMParser, Element, HTMLDocument, ID } from "../types.d.ts";
 
 export default class Work {
     #session: {

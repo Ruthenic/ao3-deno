@@ -2,15 +2,7 @@
 
 import Work from "./Work.ts";
 import asyncForEach from "../utils/asyncForeach.ts";
-import type {
-    DOMParser,
-} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/dom/dom-parser.ts";
-import type {
-    Element,
-} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/dom/element.ts";
-import type {
-    HTMLDocument,
-} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/dom/document.ts";
+import { DOMParser, Element, HTMLDocument } from "../types.d.ts";
 
 export const Ratings = {
     unrated: 9,
