@@ -30,6 +30,10 @@ export const Warnings = {
 };
 
 export interface SearchParameters {
+    /*
+     * the amount of works to fetch
+     *
+    */
     limit?: number;
     any?: string;
     title?: string;
@@ -38,6 +42,7 @@ export interface SearchParameters {
     word_count?: number;
     language?: string;
     fandoms?: string[];
+    freeform?: string[];
     ratings?: number[];
     warnings?: number[];
 }
@@ -58,7 +63,13 @@ export default class Search {
         url += `&page=${pageNum}
             &work_search[query]=${this.#opts.any ?? ""}
             &work_search[title]=${this.#opts.title ?? ""}
-            &work_search[creators]=${this.#opts.author ?? ""}`;
+            &work_search[creators]=${this.#opts.author ?? ""}
+            &${
+            this.#opts.freeform?.map((v) => `work_search[freeform_names]=${v}`)
+                .join("&")
+        }`;
+
+        console.log(url);
 
         return url;
     }

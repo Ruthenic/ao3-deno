@@ -51,7 +51,7 @@ export default class AO3 {
         return new Work(id, await res.text(), this.session, new DOMParser());
     }
 
-    async search(opts: SearchParameters) {
+    search(opts: SearchParameters) {
         return new Search(opts, this.session, new DOMParser());
     }
 }
