@@ -67,7 +67,6 @@ export default class Chapter {
     }
 
     async init() {
-        console.log("initing chapter");
         const res = await this.#session.get(
             `/works/${this.#workID}/chapters/${this.#id}?view_adult=true`,
         );
@@ -112,7 +111,6 @@ export default class Chapter {
             ),
         ).forEach(
             (t) => this.#text += (t as Element).innerText + "\n",
-            console.log(this.#text),
         );
         try {
             this.#text = this.#text.trim();
@@ -131,7 +129,6 @@ export default class Chapter {
                 ),
             ).forEach(
                 (t) => this.#text += (t as Element).innerText + "\n",
-                console.log(this.#text),
             );
         }
     }

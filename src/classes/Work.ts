@@ -21,6 +21,10 @@ export default class Work {
     #document: HTMLDocument;
     #DOMParser: DOMParser;
     /**
+     * the name of the work
+     */
+    name = "";
+    /**
      * a list of Chapters in the work
      */
     chapters: Chapter[] = [];
@@ -62,9 +66,15 @@ export default class Work {
 
     //jank incarnate
     async init() {
+        this.populateMetadata();
         this.populateTags();
         this.populateDates();
         await this.populateChapters();
+    }
+
+    populateMetadata() {
+        this.name = (this.#document.querySelector("h2.title") as Element)
+            .innerText.trim();
     }
 
     populateTags() {
