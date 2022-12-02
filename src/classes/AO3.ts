@@ -2,7 +2,7 @@ import Work from "./Work.ts";
 import { ID } from "../types.d.ts";
 import {
     DOMParser,
-} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/deno-dom-native.ts";
+} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/deno-dom-wasm.ts";
 import Search, { SearchParameters } from "./Search.ts";
 
 export default class AO3 {
