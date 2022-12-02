@@ -1,0 +1,9 @@
+pipeline:
+    test:
+        image: denoland/deno:alpine
+        commands:
+            - deno test -A --unstable tests/index.ts
+    lint:
+        image: denoland/deno:alpine
+        commands:
+            - deno lint

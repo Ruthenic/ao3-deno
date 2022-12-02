@@ -17,9 +17,6 @@ export default class AO3 {
     constructor(opts?: {
         url?: string;
     }) {
-        /*this.session = axiod.create({
-      baseURL: opts?.url ?? "https://archiveofourown.org/",
-    });*/
         this.session = {
             get: async (path: string) => {
                 const res = await fetch(
