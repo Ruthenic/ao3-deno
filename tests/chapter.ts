@@ -1,6 +1,5 @@
 //FIXME: we need to test single-chapter works too (because those seem to be really inconsistent for some reason?)
 import AO3 from "../mod.ts";
-import { Work } from "../mod.ts";
 import { assert } from "https://deno.land/std@0.167.0/testing/asserts.ts";
 
 export default async function test(ao3: AO3) {
