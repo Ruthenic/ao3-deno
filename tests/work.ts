@@ -3,7 +3,7 @@ import type { Work } from "../mod.ts";
 import { assert } from "https://deno.land/std@0.167.0/testing/asserts.ts";
 
 export default async function test(ao3: AO3) {
-    await Deno.test("works", async (test) => {
+    Deno.test("works", async (test) => {
         let work: Work;
         await test.step("initialization", async () => {
             work = await ao3.getWork("43251729");
