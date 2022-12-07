@@ -2,7 +2,7 @@
 import AO3 from "../mod.ts";
 import { assert } from "https://deno.land/std@0.167.0/testing/asserts.ts";
 
-export default async function test(ao3: AO3) {
+export default function test(ao3: AO3) {
     Deno.test("chapters", async (test) => {
         const work = await ao3.getWork("43251729");
         await work.init();
