@@ -86,6 +86,12 @@ export default class Chapter {
         await this.populateText();
     }
 
+    // deletes our #document if we want to clean up memory and not use a shitton
+    freeDocument() {
+        //completely sane behaviour
+        this.#document = undefined as unknown as HTMLDocument;
+    }
+
     populateMetadata() {
         this.#name = this.#document.querySelector("h3.title")?.innerText
             .replace(

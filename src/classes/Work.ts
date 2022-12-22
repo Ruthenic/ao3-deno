@@ -63,6 +63,12 @@ export default class Work {
         await this.populateChapters();
     }
 
+    // deletes our #document if we want to clean up memory and not use a shitton
+    freeDocument() {
+        //completely sane behaviour
+        this.#document = undefined as unknown as HTMLDocument;
+    }
+
     populateMetadata() {
         this.name = (this.#document.querySelector("h2.title") as Element)
             .innerText.trim();
