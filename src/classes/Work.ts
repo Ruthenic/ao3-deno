@@ -124,6 +124,7 @@ export default class Work {
                 this.id,
                 this.#session,
                 this.#DOMParser,
+                {},
             );
             this.chapters.push(
                 newChapter,
@@ -148,6 +149,7 @@ export default class Work {
                     c.getAttribute("value") as string,
                     this.#session,
                     this.#DOMParser,
+                    { name: c.innerText },
                 );
                 this.chapters.push(
                     newChapter,

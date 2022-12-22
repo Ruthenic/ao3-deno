@@ -15,6 +15,7 @@ export default class Chapter {
     #summary!: string;
     #startNote!: string;
     #endNote!: string;
+    earlyName?: string;
     id!: Promise<ID>;
     workID!: Promise<ID>;
     name!: Promise<string>;
@@ -24,16 +25,26 @@ export default class Chapter {
     startNote!: Promise<string>;
     endNote!: Promise<string>;
 
-    constructor(workId: ID, id: ID, session: {
-        get: (path: string) => Promise<Response>;
-    }, DOMParser: DOMParser) {
+    constructor(
+        workId: ID,
+        id: ID,
+        session: {
+            get: (path: string) => Promise<Response>;
+        },
+        DOMParser: DOMParser,
+        extraInfo: Record<string, any>,
+    ) {
         this.#session = session;
         this.#workID = workId;
         this.#id = id;
         this.#DOMParser = DOMParser;
+        this.earlyName = extraInfo.name;
 
         return new Proxy(this, {
             get: async (target, prop) => {
+                if (prop === "earlyName") {
+                    return this.earlyName;
+                }
                 if (!this.isInited) {
                     await target.init();
                     target.isInited = true;
