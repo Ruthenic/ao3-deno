@@ -112,10 +112,6 @@ export default class Chapter {
     async populateText() {
         this.#text = "";
 
-        this.#html = (this.#document.querySelector(
-            "div.userstuff[role='article']",
-        ) as Element).innerHTML;
-
         Array.from(
             this.#document.querySelectorAll(
                 "div.userstuff[role='article'] > p",
@@ -127,6 +123,10 @@ export default class Chapter {
         );
         try {
             this.#text = this.#text.trim();
+
+            this.#html = (this.#document.querySelector(
+                "div.userstuff[role='article']",
+            ) as Element).innerHTML;
         } catch {
             //assume single chapter work
             const res = await this.#session.get(
