@@ -10,6 +10,7 @@ export default class Chapter {
     #id: ID;
     #workID: ID;
     #name!: string;
+    #html!: string;
     #text!: string;
     #summary!: string;
     #startNote!: string;
@@ -17,6 +18,7 @@ export default class Chapter {
     id!: Promise<ID>;
     workID!: Promise<ID>;
     name!: Promise<string>;
+    html!: Promise<string>;
     text!: Promise<string>;
     summary!: Promise<string>;
     startNote!: Promise<string>;
@@ -43,6 +45,8 @@ export default class Chapter {
                         return target.#workID;
                     case "name":
                         return target.#name;
+                    case "html":
+                        return target.#html;
                     case "text":
                         return target.#text;
                     case "summary":
@@ -100,7 +104,10 @@ export default class Chapter {
                 "div.userstuff[role='article'] > p",
             ),
         ).forEach(
-            (t) => this.#text += (t as Element).innerText + "\n",
+            (t) => {
+                this.#text += (t as Element).innerText + "\n";
+                this.#html += (t as Element).innerHTML;
+            },
         );
         try {
             this.#text = this.#text.trim();
@@ -118,7 +125,10 @@ export default class Chapter {
                     "[role='article'] > div.userstuff > p",
                 ),
             ).forEach(
-                (t) => this.#text += (t as Element).innerText + "\n",
+                (t) => {
+                    this.#text += (t as Element).innerText + "\n";
+                    this.#html += (t as Element).innerHTML;
+                },
             );
         }
     }
