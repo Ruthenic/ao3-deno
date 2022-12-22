@@ -111,6 +111,11 @@ export default class Chapter {
 
     async populateText() {
         this.#text = "";
+
+        this.#html = (this.#document.querySelector(
+            "div.userstuff[role='article']",
+        ) as Element).innerHTML;
+
         Array.from(
             this.#document.querySelectorAll(
                 "div.userstuff[role='article'] > p",
@@ -118,7 +123,6 @@ export default class Chapter {
         ).forEach(
             (t) => {
                 this.#text += (t as Element).innerText + "\n";
-                this.#html += (t as Element).innerHTML;
             },
         );
         try {
@@ -132,6 +136,11 @@ export default class Chapter {
                 await res.text(),
                 "text/html",
             ) as HTMLDocument;
+
+            this.#html = (this.#document.querySelector(
+                "[role='article'] > div.userstuff",
+            ) as Element).innerHTML;
+
             Array.from(
                 this.#document.querySelectorAll(
                     "[role='article'] > div.userstuff > p",
