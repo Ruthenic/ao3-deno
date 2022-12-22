@@ -37,7 +37,6 @@ export default function test(ao3: AO3) {
                 await work.chapters[3].startNote ===
                     `If you haven't noticed yet, most of these chapters are named after Bendy fansongs
 
-
 This is definitely because I'm trying to be smart and cool and make funny references, and definitely not because I'm uncreative :)`,
                 "incorrect start note parsing",
             );
