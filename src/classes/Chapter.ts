@@ -15,7 +15,7 @@ export default class Chapter {
     #summary!: string;
     #startNote!: string;
     #endNote!: string;
-    earlyName?: string;
+    earlyName?: Promise<string>;
     id!: Promise<ID>;
     workID!: Promise<ID>;
     name!: Promise<string>;
@@ -32,6 +32,7 @@ export default class Chapter {
             get: (path: string) => Promise<Response>;
         },
         DOMParser: DOMParser,
+        // deno-lint-ignore no-explicit-any
         extraInfo: Record<string, any>,
     ) {
         this.#session = session;
