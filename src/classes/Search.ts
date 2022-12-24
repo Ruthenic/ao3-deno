@@ -59,6 +59,10 @@ export default class Search {
             &${
             this.#opts.freeform?.map((v) => `work_search[freeform_names]=${v}`)
                 .join("&")
+        }
+            &${
+            this.#opts.fandoms?.map((v) => `work_search[fandom_names]=${v}`)
+                .join("&")
         }`;
 
         return url;
@@ -91,7 +95,7 @@ export default class Search {
                     return;
                 }
                 const workId = e.id.replace("work_", "");
-                console.log(workId);
+                //console.log(workId);
                 const res = await this.#session.get(
                     `/works/${workId}?view_adult=true&view_full_work=true`,
                 );
