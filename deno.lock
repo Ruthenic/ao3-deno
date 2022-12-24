@@ -41,6 +41,10 @@
     "https://deno.land/std@0.97.0/path/posix.ts": "f56c3c99feb47f30a40ce9d252ef6f00296fa7c0fcb6dd81211bdb3b8b99ca3b",
     "https://deno.land/std@0.97.0/path/separator.ts": "8fdcf289b1b76fd726a508f57d3370ca029ae6976fcde5044007f062e643ff1c",
     "https://deno.land/std@0.97.0/path/win32.ts": "77f7b3604e0de40f3a7c698e8a79e7f601dc187035a1c21cb1e596666ce112f8",
+    "https://deno.land/x/another_cookiejar@v5.0.1/cookie.ts": "2be7548d01a3a9df97deb187761a843a77fd824057478919abf1e1e89ae1eb2e",
+    "https://deno.land/x/another_cookiejar@v5.0.1/cookie_jar.ts": "e47d7b2c608bcd9600fd26825b600946f16ae167216cea71935049188d2fc6d1",
+    "https://deno.land/x/another_cookiejar@v5.0.1/fetch_wrapper.ts": "4fbca1e77383cf7da4703798e06a1129b21120f4d01c3a4c0801674dd7b6d53b",
+    "https://deno.land/x/another_cookiejar@v5.0.1/mod.ts": "eff949014965771f2cd447fe78625a1ad28b59333afa40640f02c0922534d89a",
     "https://deno.land/x/axiod@0.26.2/helpers.ts": "467f2ca75608f368c8092e800eab0d6d79b3fa42346372be62a5b93acf50fe7e",
     "https://deno.land/x/axiod@0.26.2/interfaces.ts": "1b5a7b70b1e7faecd2f251ad080bd87188fba585e2de667af472c4d72abf636e",
     "https://deno.land/x/axiod@0.26.2/mod.ts": "1175ec90a040d764b9940753f8d8e3f37a2328a0536eed48e411a8f1a3e9e5cb",
@@ -79,5 +83,57 @@
     "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/dom/utils-types.ts": "96db30e3e4a75b194201bb9fa30988215da7f91b380fca6a5143e51ece2a8436",
     "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/dom/utils.ts": "ecd889ba74f3ce282620d8ca1d4d5e0365e6cc86101d2352f3bbf936ae496e2c",
     "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/parser.ts": "b65eb7e673fa7ca611de871de109655f0aa9fa35ddc1de73df1a5fc2baafc332"
+  },
+  "npm": {
+    "specifiers": { "fetch-cookie": "fetch-cookie@2.1.0" },
+    "packages": {
+      "fetch-cookie@2.1.0": {
+        "integrity": "sha512-39+cZRbWfbibmj22R2Jy6dmTbAWC+oqun1f1FzQaNurkPDUP4C38jpeZbiXCR88RKRVDp8UcDrbFXkNhN+NjYg==",
+        "dependencies": {
+          "set-cookie-parser": "set-cookie-parser@2.5.1",
+          "tough-cookie": "tough-cookie@4.1.2"
+        }
+      },
+      "psl@1.9.0": {
+        "integrity": "sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==",
+        "dependencies": {}
+      },
+      "punycode@2.1.1": {
+        "integrity": "sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==",
+        "dependencies": {}
+      },
+      "querystringify@2.2.0": {
+        "integrity": "sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==",
+        "dependencies": {}
+      },
+      "requires-port@1.0.0": {
+        "integrity": "sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==",
+        "dependencies": {}
+      },
+      "set-cookie-parser@2.5.1": {
+        "integrity": "sha512-1jeBGaKNGdEq4FgIrORu/N570dwoPYio8lSoYLWmX7sQ//0JY08Xh9o5pBcgmHQ/MbsYp/aZnOe1s1lIsbLprQ==",
+        "dependencies": {}
+      },
+      "tough-cookie@4.1.2": {
+        "integrity": "sha512-G9fqXWoYFZgTc2z8Q5zaHy/vJMjm+WV0AkAeHxVCQiEB1b+dGvWzFW6QV07cY5jQ5gRkeid2qIkzkxUnmoQZUQ==",
+        "dependencies": {
+          "psl": "psl@1.9.0",
+          "punycode": "punycode@2.1.1",
+          "universalify": "universalify@0.2.0",
+          "url-parse": "url-parse@1.5.10"
+        }
+      },
+      "universalify@0.2.0": {
+        "integrity": "sha512-CJ1QgKmNg3CwvAv/kOFmtnEN05f0D/cn9QntgNOQlQF9dgvVTHj3t+8JPdjqawCHk7V/KA+fbUqzZ9XWhcqPUg==",
+        "dependencies": {}
+      },
+      "url-parse@1.5.10": {
+        "integrity": "sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==",
+        "dependencies": {
+          "querystringify": "querystringify@2.2.0",
+          "requires-port": "requires-port@1.0.0"
+        }
+      }
+    }
   }
 }
