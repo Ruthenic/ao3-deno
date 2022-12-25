@@ -15,13 +15,13 @@ export default class AO3 {
         get: (path: string) => Promise<Response>;
         post: (
             path: string,
-            payload: Record<string, any>,
+            payload: unknown,
         ) => Promise<Response>;
     };
     DOMParser = new DOMParser();
     fetch: typeof fetch;
     cookieJar: CookieJar;
-    #headers: Record<string, any>;
+    #headers: Record<string, string>;
 
     /**
      * a representation of AO3 in class form
