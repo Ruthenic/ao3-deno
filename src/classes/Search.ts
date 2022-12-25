@@ -30,10 +30,13 @@ export interface SearchParameters {
     any?: string;
     title?: string;
     author?: string;
+    complete?: boolean;
     single_chapter?: boolean;
     word_count?: number;
     language?: string;
     fandoms?: string[];
+    characters?: string[];
+    relationships?: string[];
     freeform?: string[];
     ratings?: number[];
     warnings?: number[];
@@ -56,12 +59,25 @@ export default class Search {
             &work_search[query]=${this.#opts.any ?? ""}
             &work_search[title]=${this.#opts.title ?? ""}
             &work_search[creators]=${this.#opts.author ?? ""}
+            &work_search[complete]=${this.#opts.complete ?? ""}
             &${
-            this.#opts.freeform?.map((v) => `work_search[freeform_names]=${v}`)
+            this.#opts.fandoms?.map((v) => `work_search[fandom_names]=${v}`)
                 .join("&")
         }
             &${
-            this.#opts.fandoms?.map((v) => `work_search[fandom_names]=${v}`)
+            this.#opts.characters?.map((v) =>
+                `work_search[character_names]=${v}`
+            )
+                .join("&")
+        }
+            &${
+            this.#opts.relationships?.map((v) =>
+                `work_search[relationship_names]=${v}`
+            )
+                .join("&")
+        }
+            &${
+            this.#opts.freeform?.map((v) => `work_search[freeform_names]=${v}`)
                 .join("&")
         }`;
 
