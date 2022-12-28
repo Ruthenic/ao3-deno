@@ -1,10 +1,10 @@
 export type ID = BigInt | number | string;
 export type {
     DOMParser,
-} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/dom/dom-parser.ts";
+} from "https://deno.land/x/deno_dom@v0.1.36-alpha/src/dom/dom-parser.ts";
 export type {
     Element,
-} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/dom/element.ts";
+} from "https://deno.land/x/deno_dom@v0.1.36-alpha/src/dom/element.ts";
 export type {
     HTMLDocument,
-} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/src/dom/document.ts";
+} from "https://deno.land/x/deno_dom@v0.1.36-alpha/src/dom/document.ts";

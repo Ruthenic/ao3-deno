@@ -2,7 +2,7 @@ import Work from "./Work.ts";
 import { ID } from "../types.d.ts";
 import {
     DOMParser,
-} from "https://denopkg.dev/gh/Ruthenic/deno-dom@master/deno-dom-wasm.ts";
+} from "https://deno.land/x/deno_dom@v0.1.36-alpha/deno-dom-wasm.ts";
 import { HTMLDocument } from "../types.d.ts";
 import Search, { SearchParameters } from "./Search.ts";
 import {
