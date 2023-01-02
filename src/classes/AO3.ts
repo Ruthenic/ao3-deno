@@ -1,8 +1,6 @@
 import Work from "./Work.ts";
 import { ID } from "../types.d.ts";
-import {
-    DOMParser,
-} from "https://deno.land/x/deno_dom@v0.1.36-alpha/deno-dom-wasm.ts";
+import { DOMParser } from "https://deno.land/x/deno_dom@v0.1.36-alpha/deno-dom-wasm.ts";
 import { HTMLDocument } from "../types.d.ts";
 import Search, { SearchParameters } from "./Search.ts";
 import {
@@ -82,7 +80,7 @@ export default class AO3 {
         const res = await this.session.get(
             `/works/${id}?view_adult=true&view_full_work=true`,
         );
-        return new Work(id, await res.text(), this.session, new DOMParser());
+        return new Work(id, await res.text(), this.session, this.DOMParser);
     }
 
     async authenticate(username_or_email: string, password: string) {
@@ -111,6 +109,6 @@ export default class AO3 {
     }
 
     search(opts: SearchParameters) {
-        return new Search(opts, this.session, new DOMParser());
+        return new Search(opts, this.session, this.DOMParser);
     }
 }
