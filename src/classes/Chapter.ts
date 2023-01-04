@@ -4,26 +4,16 @@ export default class Chapter {
     #session: {
         get: (path: string) => Promise<Response>;
     };
-    isInited = false;
     #document!: HTMLDocument;
     #DOMParser: DOMParser;
-    #id: ID;
-    #workID: ID;
-    #name!: string;
-    #html!: string;
-    #text!: string;
-    #summary!: string;
-    #startNote!: string;
-    #endNote!: string;
-    earlyName?: Promise<string>;
-    id!: Promise<ID>;
-    workID!: Promise<ID>;
-    name!: Promise<string>;
-    html!: Promise<string>;
-    text!: Promise<string>;
-    summary!: Promise<string>;
-    startNote!: Promise<string>;
-    endNote!: Promise<string>;
+    id: ID;
+    workID: ID;
+    name!: string;
+    html!: string;
+    text!: string;
+    summary!: string;
+    startNote!: string;
+    endNote!: string;
 
     constructor(
         workId: ID,
@@ -36,45 +26,15 @@ export default class Chapter {
         extraInfo: Record<string, any>,
     ) {
         this.#session = session;
-        this.#workID = workId;
-        this.#id = id;
+        this.workID = workId;
+        this.id = id;
         this.#DOMParser = DOMParser;
-        this.earlyName = extraInfo.name;
-
-        return new Proxy(this, {
-            get: async (target, prop) => {
-                if (prop === "earlyName") {
-                    return this.earlyName;
-                }
-                if (!this.isInited) {
-                    await target.init();
-                    target.isInited = true;
-                }
-                switch (prop) {
-                    case "id":
-                        return target.#id;
-                    case "workID":
-                        return target.#workID;
-                    case "name":
-                        return target.#name;
-                    case "html":
-                        return target.#html;
-                    case "text":
-                        return target.#text;
-                    case "summary":
-                        return target.#summary;
-                    case "startNote":
-                        return target.#startNote;
-                    case "endNote":
-                        return target.#endNote;
-                }
-            },
-        });
+        this.name = extraInfo.name;
     }
 
     async init() {
         const res = await this.#session.get(
-            `/works/${this.#workID}/chapters/${this.#id}?view_adult=true`,
+            `/works/${this.workID}/chapters/${this.id}?view_adult=true`,
         );
         this.#document = this.#DOMParser.parseFromString(
             await res.text(),
@@ -93,7 +53,7 @@ export default class Chapter {
     }
 
     populateMetadata() {
-        this.#name = this.#document.querySelector("h3.title")?.innerText
+        this.name = this.#document.querySelector("h3.title")?.innerText
             .replace(
                 /Chapter \d+: /,
                 "",
@@ -101,7 +61,7 @@ export default class Chapter {
     }
 
     populateSummary() {
-        this.#summary = this.#document.querySelector("#summary > .userstuff")
+        this.summary = this.#document.querySelector("#summary > .userstuff")
             ?.innerText.trim() as string;
     }
 
@@ -109,14 +69,14 @@ export default class Chapter {
         const notesList = Array.from(
             this.#document.querySelectorAll(".notes > .userstuff"),
         ).map((n) => (n as Element).innerHTML);
-        this.#startNote = notesList[0]?.trim()?.replace(/<\/{0,1}p>/g, "\n")
+        this.startNote = notesList[0]?.trim()?.replace(/<\/{0,1}p>/g, "\n")
             ?.trim();
-        this.#endNote = notesList[1]?.trim()?.replace(/<\/{0,1}p>/g, "\n")
+        this.endNote = notesList[1]?.trim()?.replace(/<\/{0,1}p>/g, "\n")
             ?.trim();
     }
 
     async populateText() {
-        this.#text = "";
+        this.text = "";
 
         const elements = this.#document.querySelectorAll(
             "div.userstuff[role='article'] > p",
@@ -125,25 +85,25 @@ export default class Chapter {
         for (let i = 0; i < elements.length; i++) {
             const element = elements[i] as Element;
 
-            this.#text += element.innerText + "\n";
+            this.text += element.innerText + "\n";
         }
         try {
-            this.#text = this.#text.trim();
+            this.text = this.text.trim();
 
-            this.#html = (this.#document.querySelector(
+            this.html = (this.#document.querySelector(
                 "div.userstuff[role='article']",
             ) as Element).innerHTML;
         } catch {
             //assume single chapter work
             const res = await this.#session.get(
-                `/works/${this.#workID}?view_adult=true`,
+                `/works/${this.workID}?view_adult=true`,
             );
             this.#document = this.#DOMParser.parseFromString(
                 await res.text(),
                 "text/html",
             ) as HTMLDocument;
 
-            this.#html = (this.#document.querySelector(
+            this.html = (this.#document.querySelector(
                 "[role='article'] > div.userstuff",
             ) as Element).innerHTML;
 
@@ -154,8 +114,8 @@ export default class Chapter {
             for (let i = 0; i < elements.length; i++) {
                 const element = elements[i] as Element;
 
-                this.#text += element.innerText + "\n";
-                this.#html += element.innerHTML;
+                this.text += element.innerText + "\n";
+                this.html += element.innerHTML;
             }
         }
     }

@@ -75,19 +75,6 @@ export default class Work {
     }
 
     populateTags() {
-        /* this.#document.querySelectorAll("dd.fandom > ul.commas > li").map(
-            (t) => this.tags.push(t.text),
-        );
-        this.#document.querySelectorAll("dd.relationship > ul.commas > li").map(
-            (t) => this.tags.push(t.text),
-        );
-        this.#document.querySelectorAll("dd.character > ul.commas > li").map(
-            (t) => this.tags.push(t.text),
-        );
-        this.#document.querySelectorAll("dd.freeform > ul.commas > li").map(
-            (t) => this.tags.push(t.text),
-        ); */
-
         const elements = this.#document.querySelectorAll("dd > ul.commas > li");
 
         for (let i = 0; i < elements.length; i++) {
