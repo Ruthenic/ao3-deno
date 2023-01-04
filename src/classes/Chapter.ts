@@ -118,15 +118,15 @@ export default class Chapter {
     async populateText() {
         this.#text = "";
 
-        Array.from(
-            this.#document.querySelectorAll(
-                "div.userstuff[role='article'] > p",
-            ),
-        ).forEach(
-            (t) => {
-                this.#text += (t as Element).innerText + "\n";
-            },
+        const elements = this.#document.querySelectorAll(
+            "div.userstuff[role='article'] > p",
         );
+
+        for (let i = 0; i < elements.length; i++) {
+            const element = elements[i] as Element;
+
+            this.#text += element.innerText + "\n";
+        }
         try {
             this.#text = this.#text.trim();
 
@@ -147,16 +147,16 @@ export default class Chapter {
                 "[role='article'] > div.userstuff",
             ) as Element).innerHTML;
 
-            Array.from(
-                this.#document.querySelectorAll(
-                    "[role='article'] > div.userstuff > p",
-                ),
-            ).forEach(
-                (t) => {
-                    this.#text += (t as Element).innerText + "\n";
-                    this.#html += (t as Element).innerHTML;
-                },
+            const elements = this.#document.querySelectorAll(
+                "[role='article'] > div.userstuff > p",
             );
+
+            for (let i = 0; i < elements.length; i++) {
+                const element = elements[i] as Element;
+
+                this.#text += element.innerText + "\n";
+                this.#html += element.innerHTML;
+            }
         }
     }
 }

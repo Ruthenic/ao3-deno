@@ -1,7 +1,6 @@
 //NOTE: AO3's searching "api" is an absolute clusterfuck. i'm sorry.
 
 import Work from "./Work.ts";
-import asyncForEach from "../utils/asyncForeach.ts";
 import { DOMParser, Element, HTMLDocument } from "../types.d.ts";
 
 export const Ratings = {
@@ -102,29 +101,29 @@ export default class Search {
             "text/html",
         ) as HTMLDocument;
 
-        let i = 0;
         const limit = this.#opts.limit ?? 20;
-        await asyncForEach(
-            Array.from(this.#document.querySelectorAll("[role='article']")),
-            async (e: Element) => {
-                if (i >= limit) {
-                    return;
-                }
-                const workId = e.id.replace("work_", "");
-                //console.log(workId);
-                const res = await this.#session.get(
-                    `/works/${workId}?view_adult=true&view_full_work=true`,
-                );
-                const work = new Work(
-                    workId,
-                    await res.text(),
-                    this.#session,
-                    this.#DOMParser,
-                );
-                await work.init();
-                this.results.push(work);
-                i++;
-            },
-        );
+        const elements = this.#document.querySelectorAll("[role='article']");
+
+        for (let i = 0; i < elements.length; i++) {
+            const element: Element = elements[i] as Element;
+
+            if (i >= limit) {
+                return;
+            }
+
+            const workId = element.id.replace("work_", "");
+            const res = await this.#session.get(
+                `/works/${workId}?view_adult=true&view_full_work=true`,
+            );
+            const work = new Work(
+                workId,
+                await res.text(),
+                this.#session,
+                this.#DOMParser,
+            );
+
+            await work.init();
+            this.results.push(work);
+        }
     }
 }

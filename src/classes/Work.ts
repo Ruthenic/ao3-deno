@@ -75,34 +75,24 @@ export default class Work {
     }
 
     populateTags() {
-        Array.from(
-            (this.#document.querySelector("dd.fandom > ul.commas") as Element)
-                ?.children ?? [],
-        ).map(
-            (t) => this.tags.push(t.children[0].innerText),
+        /* this.#document.querySelectorAll("dd.fandom > ul.commas > li").map(
+            (t) => this.tags.push(t.text),
         );
-        Array.from(
-            (this.#document.querySelector(
-                "dd.relationship > ul.commas",
-            ) as Element)
-                ?.children ?? [],
-        ).map(
-            (t) => this.tags.push(t.children[0].innerText),
+        this.#document.querySelectorAll("dd.relationship > ul.commas > li").map(
+            (t) => this.tags.push(t.text),
         );
-        Array.from(
-            (this.#document.querySelector(
-                "dd.character > ul.commas",
-            ) as Element)
-                ?.children ?? [],
-        ).map(
-            (t) => this.tags.push(t.children[0].innerText),
+        this.#document.querySelectorAll("dd.character > ul.commas > li").map(
+            (t) => this.tags.push(t.text),
         );
-        Array.from(
-            (this.#document.querySelector("dd.freeform > ul.commas") as Element)
-                ?.children ?? [], //does that make me insane
-        ).map(
-            (t) => this.tags.push(t.children[0].innerText),
-        );
+        this.#document.querySelectorAll("dd.freeform > ul.commas > li").map(
+            (t) => this.tags.push(t.text),
+        ); */
+
+        const elements = this.#document.querySelectorAll("dd > ul.commas > li");
+
+        for (let i = 0; i < elements.length; i++) {
+            this.tags.push((elements[i] as Element)?.innerText);
+        }
     }
 
     populateDates() {
@@ -143,23 +133,29 @@ export default class Work {
             "text/html",
         ) as HTMLDocument;
 
-        Array.from((document.getElementById("selected_id") as Element).children)
+        const elements = (Array.from(
+            document.querySelectorAll("#selected_id > option"),
+        ) as Element[])
             .sort(
-                (a, b) => {
+                (a: Element, b: Element) => {
                     return Number(a.getAttribute("value")) -
                         Number(b.getAttribute("value"));
                 },
-            ).forEach((c) => {
-                const newChapter = new Chapter(
-                    this.id,
-                    c.getAttribute("value") as string,
-                    this.#session,
-                    this.#DOMParser,
-                    { name: c.innerText },
-                );
-                this.chapters.push(
-                    newChapter,
-                );
-            });
+            );
+
+        for (let i = 0; i < elements.length; i++) {
+            const element = elements[i];
+
+            const newChapter = new Chapter(
+                this.id,
+                element.getAttribute("value") as string,
+                this.#session,
+                this.#DOMParser,
+                { name: element.innerText },
+            );
+            this.chapters.push(
+                newChapter,
+            );
+        }
     }
 }
