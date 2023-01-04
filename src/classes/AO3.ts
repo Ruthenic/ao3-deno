@@ -3,73 +3,23 @@ import { ID } from "../types.d.ts";
 import { DOMParser } from "https://deno.land/x/deno_dom@v0.1.36-alpha/deno-dom-wasm.ts";
 import { HTMLDocument } from "../types.d.ts";
 import Search, { SearchParameters } from "./Search.ts";
-import {
-    CookieJar,
-    wrapFetch,
-} from "https://deno.land/x/another_cookiejar@v5.0.1/mod.ts";
+import { newSession, Options } from "../utils/http.ts";
 
 export default class AO3 {
-    session: {
-        get: (path: string) => Promise<Response>;
-        post: (
-            path: string,
-            payload: unknown,
-        ) => Promise<Response>;
-    };
+    session: ReturnType<typeof newSession>;
     DOMParser = new DOMParser();
-    fetch: typeof fetch;
-    cookieJar: CookieJar;
-    #headers: Record<string, string>;
 
     /**
      * a representation of AO3 in class form
      */
-    constructor(opts?: {
-        url?: string;
-    }) {
-        this.cookieJar = new CookieJar();
-        this.fetch = wrapFetch({ cookieJar: this.cookieJar });
-        this.#headers = {
-            "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; rv:108.0) Gecko/20100101 Firefox/108.0",
-        };
-        this.session = {
-            get: async (path: string) => {
-                const res = await this.fetch(
-                    opts?.url ?? "https://archiveofourown.org/" + path,
-                    {
-                        headers: this.#headers,
-                    },
-                );
-                if (res.status > 300) {
-                    console.log(res);
-                    throw new Error("Failed request, probably rate-limited");
-                }
-                return res;
-            },
-
-            post: async (
-                path: string,
-                // deno-lint-ignore no-explicit-any
-                payload: any,
-                headers?: string,
-            ) => {
-                const res = await this.fetch(
-                    opts?.url ?? "https://archiveofourown.org/" + path,
-                    {
-                        "credentials": "include",
-                        headers: Object.assign(headers ?? {}, this.#headers),
-                        method: "POST",
-                        body: payload,
-                    },
-                );
-                if (res.status > 300) {
-                    console.log(res);
-                    throw new Error("Failed request, probably rate-limited");
-                }
-                return res;
-            },
-        };
+    constructor(opts?: Options) {
+        if (opts && !opts.headers) {
+            opts.headers = {
+                "User-Agent":
+                    "Mozilla/5.0 (Windows NT 10.0; rv:108.0) Gecko/20100101 Firefox/108.0",
+            };
+        }
+        this.session = newSession(opts ?? {});
     }
 
     /**

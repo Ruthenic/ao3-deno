@@ -4,4 +4,5 @@ export default AO3;
 import Chapter from "./src/classes/Chapter.ts";
 import Search from "./src/classes/Search.ts";
 import Work from "./src/classes/Work.ts";
-export { AO3, Chapter, Search, Work };
+const VERSION = "v0.2.0";
+export { AO3, Chapter, Search, VERSION, Work };
